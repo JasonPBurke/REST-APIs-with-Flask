@@ -1,3 +1,5 @@
+import os # to access our postgres db environment variables
+
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
@@ -8,7 +10,7 @@ from resources.item import Item, ItemList
 from resources.store import Store, StoreList
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db') #ONLINE/OFFLINE DB ACCESS ARGUEMENTS
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # turns off flask_sqlalchemy tracker as SQLAlchemy has a better one built in
 app.secret_key = 'aSecretKey'
 api = Api(app)
